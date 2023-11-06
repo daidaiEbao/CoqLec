@@ -1,12 +1,16 @@
 ## FUNCTIONAL PROGRAMMING IN COQ
 
 ### Introduction
+- If a procedure or method has no side effects, then (ignoring efficiency) all we need to understand about it is how it maps inputs to outputs -- that is, we can think of it as just a concrete method for computing a mathematical function.
+
+- The other sense in which functional programming is "functional" is that it emphasizes the use of functions as first-class values -- i.e., values that can be passed as arguments to other functions, returned as results, included in data structures, etc. 
 
 ### Data and Functions
 
-Enumerated Types
+#### Enumerated Types
+Coq offers a powerful mechanism for defining new data types from scratch, with all these familiar types as instances.  
 
-a type
+**e.g.** a type
 
 ```Coq
 Inductive day : Type :=
@@ -19,7 +23,7 @@ Inductive day : Type :=
 	| sunday.
 ```
 
-a function
+**e.g.** a function
 
 >  the argument and return types of this function are explicitly declared
 
@@ -36,8 +40,9 @@ Definition next_weekday (d:day) : day :=
 	end.
 ```
 
-using ways
+**e.g.** using ways
 
+- First
 ``` Coq
 Compute (next_weekday friday).
 (* ==> monday : day *)
@@ -46,6 +51,7 @@ Compute (next_weekday (next_weekday saturday)).
 (* ==> tuesday : day *)
 ```
 
+- Second
 ``` Coq
 Example test_next_weekday: 
 	(next_weekday (next_weekday saturday)) = tuesday.
@@ -53,11 +59,12 @@ Example test_next_weekday:
 Proof. simpl. reflexivity. Qed.
 ```
 
-Third, we can ask Coq to *extract*, from our Definition, a program in another, more conventional, programming language (OCaml, Scheme, or Haskell) with a high-performance compiler.
+- Third  
+We can ask Coq to *extract*, from our Definition, a program in another, more conventional, programming language (OCaml, Scheme, or Haskell) with a high-performance compiler.
 
 
 
-Booleans
+#### Booleans
 
 ``` Coq
 Inductive bool : Type :=
@@ -84,7 +91,7 @@ The last illustrate Coq's syntax for multi-argument function definitions.
 
 
 
-Types
+#### Types
 
 ```Coq
 Check true.
@@ -100,7 +107,7 @@ Check andb
 
 
 
-New Types from Old
+#### New Types from Old
 
 The types we have defined so far are examples of "enumerated types": their definitions explicitly enumerate a finite set of elements, called *constructors*. 
 
@@ -141,7 +148,7 @@ The pattern "primary _" here is shorthand for "the constructor primary applied t
 
 
 
-Modules
+#### Modules
 
 If we enclose a collection of declarations between Module X and End X markers, then, **in the remainder of** the file after the End, these definitions are referred to by names like X.foo instead of just foo.
 
@@ -158,7 +165,7 @@ Check myblue : bool.
 
 
 
-Tuples
+#### Tuples
 
 A single constructor with multiple parameters can be used to create a tuple type.
 
@@ -184,7 +191,7 @@ We use **underscore** (_) as a *wildcard pattern* to avoid inventing variable na
 
 
 
-Numbers
+#### Numbers
 
 ``` Coq
 Inductive nat : Type :=
@@ -293,11 +300,23 @@ Proof.
     + reflexivity.
     + reflexivity.
 Qed.
+
+Theorem andb_true_elim2 : forall b c : bool,
+  andb b c = true -> c = true.
+Proof.
+(*   (* FILL IN HERE *) Admitted. *)
+  intros b c.
+  destruct b eqn:Eb.
+  - simpl. intros H. rewrite H. reflexivity.
+  - destruct c eqn:Ec.
+    + simpl. intros H. reflexivity.
+    + simpl. intros H. rewrite H. reflexivity.
+Qed.
 ```
 
 
 
-More on Notation * Optional * 
+### More on Notation * Optional * 
 
 For each notation symbol in Coq, we can specify its *precedence level* and its *associativity*.
 
@@ -307,6 +326,11 @@ Pro tip: Coq's notation mechanism is not especially powerful. Don't expect too m
 
 
 
-Fixpoints and Structural Recursion * Optional *
+### Fixpoints and Structural Recursion * Optional *
 
 Coq demands that some argument of *every* Fixpoint definition is "decreasing."
+
+### Exs
+- Exercise: 2 stars, standard (andb_true_elim2)
+- Exercise: 3 stars, standard, optional (andb_eq_orb)  
+- Exercise: 3 stars, standard (binary)
