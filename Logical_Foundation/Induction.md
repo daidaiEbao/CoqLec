@@ -8,6 +8,7 @@ From LF Require Export Basics.
 
 This file is analogous to the .class files compiled from .java source files and the .o files compiled from .c files.
 
+### Proof by Induction
 ``` Coq
 Theorem add_0_r_firsttry : ∀ n:nat,
   n + 0 = n.
@@ -35,7 +36,7 @@ the *principle of induction over natural numbers*
 
 
 
-A typical example
+A typical example in Exercise: 2 stars, standard, especially useful (basic_induction)
 
 ``` Coq
 Theorem plus_n_Sm : forall n m : nat,
@@ -88,7 +89,11 @@ So, assert has two features:
 
 
 ### Formal vs. Informal Proof
+> "_Informal proofs are algorithms; formal proofs are code."
 
 A proof of a mathematical proposition P is a written (or spoken) text that instills in the reader or hearer the certainty that P is true -- an unassailable argument for the truth of P. 
 
 Some readers may be particularly pedantic, inexperienced, or just plain thick-headed; the only way to convince them will be to make the argument in painstaking detail.
+
+### Exs
+- Exercise: 3 stars, standard, especially useful (mul_comm)
