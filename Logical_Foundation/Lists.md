@@ -162,6 +162,8 @@ The type id is just a wrapper for the type nat. We can using type nat with paren
 ### Exs
 - Exercise: 3 stars, advanced (alternate)
 - Exercise: 3 stars, standard, especially useful (bag_functions)
+> Personal Note: 
+How to understand the first question in bag_functions?
 - Exercise: 2 stars, standard, especially useful (add_inc_count)
 - Exercise: 3 stars, standard (list_exercises)
 - Exercise: 3 stars, advanced (remove_does_not_increase_count)

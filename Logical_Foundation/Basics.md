@@ -324,7 +324,7 @@ Each notation symbol is also associated with a *notation scope*.
 
 **Pro tip**: Coq's notation mechanism is not especially powerful. Don't expect too much from it.
 
-**Personal Note**:
+> Personal Note:
 How to erase the parentheses on the two sides of an operator? 
 - The precedence level of the expression on the side same as associativity is less than or equal to the operator.
 - The variable denoted by the expression could be computed in the definition of operator once at least. 
