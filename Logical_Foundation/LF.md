@@ -105,3 +105,25 @@ Using destruct on Compound Expressions
 Review  
 
 Additional Exercises
+
+## Logic in Coq
+Get nots [here](/Logical_Foundation/Logic.md).
+
+Logical Connectives
+- Conjunction
+- Disjunction
+- Falsehood and Negation
+- Truth
+- Logical Equivalence
+- Setoids and Logical Equivalence
+- Existential Quantification
+
+Programming with Propositions
+
+Applying Theorems to Arguments
+
+Working with Decidable Properties
+
+The Logic of Coq
+- Functional Extensionality
+- Classical vs. Constructive Logic
