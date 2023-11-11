@@ -182,7 +182,8 @@ In general, the destruct tactic can be used to perform case analysis of the resu
 
 If you will use the eqn expression shortly, you should write the eqn down, otherwise, Coq will erase all the occurence of eqn. 
 
-
+- substitute away all existing occurrences of n =? 3, 
+- add an equation to the context that records which case we are in. 
 ### Exs
 - Exercise: 3 stars, standard, optional (trans_eq_exercise)
 - Exercise: 3 stars, standard (injection_ex3)
