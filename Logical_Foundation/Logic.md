@@ -91,9 +91,78 @@ Qed.
 The built-in *discriminate* tactic takes care of all this for us!
 
 #### Logical Equivalence
+The *apply* tactic can also be used with *< - >*. We can use apply on an *< - >* in either direction, without explicitly thinking about the fact that it is really an *and* underneath.
 
+~~~Coq
+Lemma apply_iff_example1:
+  forall P Q R : Prop, (P <-> Q) -> (Q -> R) -> (P -> R).
+  intros P Q R Hiff H HP. apply H.  apply Hiff. apply HP.
+Qed.
+
+Lemma apply_iff_example2:
+  forall P Q R : Prop, (P <-> Q) -> (P -> R) -> (Q -> R).
+  intros P Q R Hiff H HQ. apply H.  apply Hiff. apply HQ.
+Qed.
+~~~
+
+**Hiff** was used in two different directions, but we didn't point it out explicitly. 
+
+#### Setoids and Logical Equivalence
+Similarly, the logical equivalence relation *< - >* is reflexive, symmetric, and transitive, so we can use it to replace one part of a proposition with another: if P *< - >* Q, then we can use *rewrite* to replace P with Q, or vice-versa.
+
+#### Existential Quantification
+To prove a statement of the form ∃ x, P, we must show that P holds for some specific choice for x, known as the witness of the existential. This is done in two steps: First, we explicitly tell Coq which witness t we have in mind by invoking the tactic ∃ t. Then we prove that P holds after all occurrences of x are replaced by t.
+
+
+~~~ Coq
+Theorem exists_example_2 : forall n,
+  (exists m, n = 4 + m) ->
+  (exists o, n = 2 + o).
+Proof.
+  (* WORKED IN CLASS *)
+  intros n [m Hm]. (* note the implicit [destruct] here *)
+  exists (2 + m).
+  apply Hm.  Qed.
+
+~~~
+
+Conversely, if we have an existential hypothesis ∃ x, P in the context, we can destruct it to obtain a witness x and a hypothesis stating that P holds of x.
+
+### Programming with Propositions
+To illustrate, let's look at how to express the claim that an element x occurs in a list l. Notice that this property has a simple recursive structure:
+- If l is the empty list, then x cannot occur in it, so the property "x appears in l" is simply false.
+- Otherwise, l has the form x' :: l'. In this case, x occurs in l if it is equal to x' or if it occurs in l'.
+~~~Coq
+Fixpoint In {A : Type} (x : A) (l : list A) : Prop :=
+  match l with
+  | [] => False
+  | x' :: l' => x' = x \/ In x l'
+  end.
+~~~
+
+### Applying Theorems to Arguments
+One feature that distinguishes Coq from some other popular proof assistants (e.g., ACL2 and Isabelle) is that it treats proofs as first-class objects.
+
+We have seen that we can use Check to ask Coq to print the type of an expression. We can also use it to ask what theorem a particular identifier refers to.
+
+The type of this object is the proposition that it is a proof of.
+
+A more elegant alternative is to apply add_comm directly to the arguments we want to instantiate it with, in much the same way as we apply a polymorphic function to a type argument.
+
+~~~Coq
+Lemma add_comm3_take3 :
+  forall x y z, x + (y + z) = (z + y) + x.
+Proof.
+  intros x y z.
+  rewrite add_comm.
+  rewrite (add_comm y z).
+  reflexivity.
+Qed.
+~~~
 
 ### Exs
 - Exercise: 2 stars, standard (and_exercise)
 - Exercise: 2 stars, standard, optional (not_implies_our_not)
 - Exercise: 2 stars, standard (de_morgan_not_or)
+- Exercise: 1 star, standard, especially useful (dist_not_exists)
+- Exercise: 3 stars, standard, optional (leb_plus_exists)
