@@ -160,9 +160,64 @@ Proof.
 Qed.
 ~~~
 
+- apply...with...
+- apply...in...
+- apply lemma vars
+
+~~~Coq
+Example lemma_application_ex :
+  forall {n : nat} {ns : list nat},
+    In n (map (fun m => m * 0) ns) ->
+    n = 0.
+Proof.
+  intros n ns H.
+  destruct (proj1 _ _ (In_map_iff _ _ _ _ _) H)
+           as [m [Hm _]].
+  rewrite mul_0_r in Hm. rewrite <- Hm. reflexivity.
+Qed.
+~~~
+
+### Working with Decidable Properties
+| | bool | Prop |
+|-|------|------|
+|decidable?|yes|no|
+|useable with match?|yes|no|
+|works with rewrite tactic?|no|yes|
+
+
+How to claim that n and m has the same value?
+- n=?m = true
+- n=m
+
+
+Conversely, an important side benefit of stating facts using booleans is enabling some proof automation through computation with Coq terms, a technique known as proof by reflection.
+
+Another advantage of booleans is that the negation of a "boolean fact" is straightforward to state and prove: simply flip the expected boolean result.
+
+### The Logic of Coq
+
+~~~Coq
+Axiom functional_extensionality : forall {X Y: Type}
+                                    {f g : X -> Y},
+  (forall (x:X), f x = g x) -> f = g.
+~~~
+
+The keyword *Axiom* means that we define an unproofed theorem but which could be used in later proofs.
+
+But the false axiom could be added.
+Another keyword *Print assumptions* will display all the subproofs. 
+~~~Coq
+Print Assumptions function_equality_ex2.
+~~~
+
+
+### Optional: Classical vs. Constructive Logic
+
 ### Exs
 - Exercise: 2 stars, standard (and_exercise)
 - Exercise: 2 stars, standard, optional (not_implies_our_not)
 - Exercise: 2 stars, standard (de_morgan_not_or)
 - Exercise: 1 star, standard, especially useful (dist_not_exists)
 - Exercise: 3 stars, standard, optional (leb_plus_exists)
+- Exercise: 3 stars, standard (even_double_conv)
+- Exercise: 4 stars, standard (tr_rev_correct)
